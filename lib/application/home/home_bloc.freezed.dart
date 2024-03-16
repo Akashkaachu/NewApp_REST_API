@@ -16,42 +16,44 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeEvent {
-  String get query => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String query) topNewsToday,
+    required TResult Function(String country, String category)
+        indiaCategoryNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String query)? topNewsToday,
+    TResult? Function(String country, String category)? indiaCategoryNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String query)? topNewsToday,
+    TResult Function(String country, String category)? indiaCategoryNews,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(TopNewsToday value) topNewsToday,
+    required TResult Function(IndiaCategoryNews value) indiaCategoryNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(TopNewsToday value)? topNewsToday,
+    TResult? Function(IndiaCategoryNews value)? indiaCategoryNews,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TopNewsToday value)? topNewsToday,
+    TResult Function(IndiaCategoryNews value)? indiaCategoryNews,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $HomeEventCopyWith<HomeEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -59,8 +61,6 @@ mixin _$HomeEvent {
 abstract class $HomeEventCopyWith<$Res> {
   factory $HomeEventCopyWith(HomeEvent value, $Res Function(HomeEvent) then) =
       _$HomeEventCopyWithImpl<$Res, HomeEvent>;
-  @useResult
-  $Res call({String query});
 }
 
 /// @nodoc
@@ -72,28 +72,13 @@ class _$HomeEventCopyWithImpl<$Res, $Val extends HomeEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? query = null,
-  }) {
-    return _then(_value.copyWith(
-      query: null == query
-          ? _value.query
-          : query // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$TopNewsTodayImplCopyWith<$Res>
-    implements $HomeEventCopyWith<$Res> {
+abstract class _$$TopNewsTodayImplCopyWith<$Res> {
   factory _$$TopNewsTodayImplCopyWith(
           _$TopNewsTodayImpl value, $Res Function(_$TopNewsTodayImpl) then) =
       __$$TopNewsTodayImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String query});
 }
@@ -154,6 +139,8 @@ class _$TopNewsTodayImpl implements TopNewsToday {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String query) topNewsToday,
+    required TResult Function(String country, String category)
+        indiaCategoryNews,
   }) {
     return topNewsToday(query);
   }
@@ -162,6 +149,7 @@ class _$TopNewsTodayImpl implements TopNewsToday {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String query)? topNewsToday,
+    TResult? Function(String country, String category)? indiaCategoryNews,
   }) {
     return topNewsToday?.call(query);
   }
@@ -170,6 +158,7 @@ class _$TopNewsTodayImpl implements TopNewsToday {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String query)? topNewsToday,
+    TResult Function(String country, String category)? indiaCategoryNews,
     required TResult orElse(),
   }) {
     if (topNewsToday != null) {
@@ -182,6 +171,7 @@ class _$TopNewsTodayImpl implements TopNewsToday {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(TopNewsToday value) topNewsToday,
+    required TResult Function(IndiaCategoryNews value) indiaCategoryNews,
   }) {
     return topNewsToday(this);
   }
@@ -190,6 +180,7 @@ class _$TopNewsTodayImpl implements TopNewsToday {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(TopNewsToday value)? topNewsToday,
+    TResult? Function(IndiaCategoryNews value)? indiaCategoryNews,
   }) {
     return topNewsToday?.call(this);
   }
@@ -198,6 +189,7 @@ class _$TopNewsTodayImpl implements TopNewsToday {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TopNewsToday value)? topNewsToday,
+    TResult Function(IndiaCategoryNews value)? indiaCategoryNews,
     required TResult orElse(),
   }) {
     if (topNewsToday != null) {
@@ -211,17 +203,165 @@ abstract class TopNewsToday implements HomeEvent {
   const factory TopNewsToday({required final String query}) =
       _$TopNewsTodayImpl;
 
-  @override
   String get query;
-  @override
   @JsonKey(ignore: true)
   _$$TopNewsTodayImplCopyWith<_$TopNewsTodayImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
+abstract class _$$IndiaCategoryNewsImplCopyWith<$Res> {
+  factory _$$IndiaCategoryNewsImplCopyWith(_$IndiaCategoryNewsImpl value,
+          $Res Function(_$IndiaCategoryNewsImpl) then) =
+      __$$IndiaCategoryNewsImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String country, String category});
+}
+
+/// @nodoc
+class __$$IndiaCategoryNewsImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$IndiaCategoryNewsImpl>
+    implements _$$IndiaCategoryNewsImplCopyWith<$Res> {
+  __$$IndiaCategoryNewsImplCopyWithImpl(_$IndiaCategoryNewsImpl _value,
+      $Res Function(_$IndiaCategoryNewsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? country = null,
+    Object? category = null,
+  }) {
+    return _then(_$IndiaCategoryNewsImpl(
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$IndiaCategoryNewsImpl implements IndiaCategoryNews {
+  const _$IndiaCategoryNewsImpl(
+      {required this.country, required this.category});
+
+  @override
+  final String country;
+  @override
+  final String category;
+
+  @override
+  String toString() {
+    return 'HomeEvent.indiaCategoryNews(country: $country, category: $category)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IndiaCategoryNewsImpl &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.category, category) ||
+                other.category == category));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, country, category);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IndiaCategoryNewsImplCopyWith<_$IndiaCategoryNewsImpl> get copyWith =>
+      __$$IndiaCategoryNewsImplCopyWithImpl<_$IndiaCategoryNewsImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String query) topNewsToday,
+    required TResult Function(String country, String category)
+        indiaCategoryNews,
+  }) {
+    return indiaCategoryNews(country, category);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String query)? topNewsToday,
+    TResult? Function(String country, String category)? indiaCategoryNews,
+  }) {
+    return indiaCategoryNews?.call(country, category);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String query)? topNewsToday,
+    TResult Function(String country, String category)? indiaCategoryNews,
+    required TResult orElse(),
+  }) {
+    if (indiaCategoryNews != null) {
+      return indiaCategoryNews(country, category);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TopNewsToday value) topNewsToday,
+    required TResult Function(IndiaCategoryNews value) indiaCategoryNews,
+  }) {
+    return indiaCategoryNews(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(TopNewsToday value)? topNewsToday,
+    TResult? Function(IndiaCategoryNews value)? indiaCategoryNews,
+  }) {
+    return indiaCategoryNews?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TopNewsToday value)? topNewsToday,
+    TResult Function(IndiaCategoryNews value)? indiaCategoryNews,
+    required TResult orElse(),
+  }) {
+    if (indiaCategoryNews != null) {
+      return indiaCategoryNews(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class IndiaCategoryNews implements HomeEvent {
+  const factory IndiaCategoryNews(
+      {required final String country,
+      required final String category}) = _$IndiaCategoryNewsImpl;
+
+  String get country;
+  String get category;
+  @JsonKey(ignore: true)
+  _$$IndiaCategoryNewsImplCopyWith<_$IndiaCategoryNewsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$HomeState {
   List<HomeSearchArticle> get newsList => throw _privateConstructorUsedError;
+  List<CategoryAndCountryList> get categoryCountryList =>
+      throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isError => throw _privateConstructorUsedError;
 
@@ -235,7 +375,11 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({List<HomeSearchArticle> newsList, bool isLoading, bool isError});
+  $Res call(
+      {List<HomeSearchArticle> newsList,
+      List<CategoryAndCountryList> categoryCountryList,
+      bool isLoading,
+      bool isError});
 }
 
 /// @nodoc
@@ -252,6 +396,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @override
   $Res call({
     Object? newsList = null,
+    Object? categoryCountryList = null,
     Object? isLoading = null,
     Object? isError = null,
   }) {
@@ -260,6 +405,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.newsList
           : newsList // ignore: cast_nullable_to_non_nullable
               as List<HomeSearchArticle>,
+      categoryCountryList: null == categoryCountryList
+          ? _value.categoryCountryList
+          : categoryCountryList // ignore: cast_nullable_to_non_nullable
+              as List<CategoryAndCountryList>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -280,7 +429,11 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<HomeSearchArticle> newsList, bool isLoading, bool isError});
+  $Res call(
+      {List<HomeSearchArticle> newsList,
+      List<CategoryAndCountryList> categoryCountryList,
+      bool isLoading,
+      bool isError});
 }
 
 /// @nodoc
@@ -295,6 +448,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? newsList = null,
+    Object? categoryCountryList = null,
     Object? isLoading = null,
     Object? isError = null,
   }) {
@@ -303,6 +457,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._newsList
           : newsList // ignore: cast_nullable_to_non_nullable
               as List<HomeSearchArticle>,
+      categoryCountryList: null == categoryCountryList
+          ? _value._categoryCountryList
+          : categoryCountryList // ignore: cast_nullable_to_non_nullable
+              as List<CategoryAndCountryList>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -320,9 +478,11 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
       {required final List<HomeSearchArticle> newsList,
+      required final List<CategoryAndCountryList> categoryCountryList,
       required this.isLoading,
       required this.isError})
-      : _newsList = newsList;
+      : _newsList = newsList,
+        _categoryCountryList = categoryCountryList;
 
   final List<HomeSearchArticle> _newsList;
   @override
@@ -332,6 +492,15 @@ class _$HomeStateImpl implements _HomeState {
     return EqualUnmodifiableListView(_newsList);
   }
 
+  final List<CategoryAndCountryList> _categoryCountryList;
+  @override
+  List<CategoryAndCountryList> get categoryCountryList {
+    if (_categoryCountryList is EqualUnmodifiableListView)
+      return _categoryCountryList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categoryCountryList);
+  }
+
   @override
   final bool isLoading;
   @override
@@ -339,7 +508,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(newsList: $newsList, isLoading: $isLoading, isError: $isError)';
+    return 'HomeState(newsList: $newsList, categoryCountryList: $categoryCountryList, isLoading: $isLoading, isError: $isError)';
   }
 
   @override
@@ -348,14 +517,20 @@ class _$HomeStateImpl implements _HomeState {
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
             const DeepCollectionEquality().equals(other._newsList, _newsList) &&
+            const DeepCollectionEquality()
+                .equals(other._categoryCountryList, _categoryCountryList) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.isError, isError) || other.isError == isError));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_newsList), isLoading, isError);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_newsList),
+      const DeepCollectionEquality().hash(_categoryCountryList),
+      isLoading,
+      isError);
 
   @JsonKey(ignore: true)
   @override
@@ -367,11 +542,14 @@ class _$HomeStateImpl implements _HomeState {
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {required final List<HomeSearchArticle> newsList,
+      required final List<CategoryAndCountryList> categoryCountryList,
       required final bool isLoading,
       required final bool isError}) = _$HomeStateImpl;
 
   @override
   List<HomeSearchArticle> get newsList;
+  @override
+  List<CategoryAndCountryList> get categoryCountryList;
   @override
   bool get isLoading;
   @override

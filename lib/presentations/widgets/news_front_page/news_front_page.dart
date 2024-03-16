@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mini/application/home/home_bloc.dart';
 import 'package:mini/core/color/color.dart';
@@ -13,16 +14,16 @@ import 'package:shimmer/shimmer.dart';
 class NewsPage extends StatelessWidget {
   NewsPage({super.key});
   ValueNotifier<int> valueNtfr = ValueNotifier(0);
-  List<String> topTrendingList = [
-    'Breaking News',
-    'Politaical',
-    'Entertainment'
-  ];
+  List<String> topTrendingList = ['Breaking News', 'Politics', 'Entertainment'];
 
   @override
   Widget build(BuildContext context) {
     // WidgetsBinding.instance!.addPostFrameCallback((_) {
-    BlocProvider.of<HomeBloc>(context).add(const TopNewsToday(query: 'bus'));
+    BlocProvider.of<HomeBloc>(context)
+        .add(TopNewsToday(query: topTrendingList[valueNtfr.value]));
+
+    BlocProvider.of<HomeBloc>(context)
+        .add(const IndiaCategoryNews(country: 'in', category: ''));
     // });
     return SafeArea(
       child: Scaffold(
@@ -46,14 +47,43 @@ class NewsPage extends StatelessWidget {
               ),
               sizedHeigtBox15,
               const Text(
-                'TOP NEWS TODAY',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                'WORLD NEWS',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
               SizedBox(
                 height: 292,
                 child: BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
-                    if (state.isLoading) {
+                    if (state.newsList.isNotEmpty) {
+                      return ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(
+                            state.newsList.length,
+                            (index) => Row(
+                                  children: [
+                                    TopNewsTopWidgets(
+                                      modelList: state.newsList[index],
+                                      contry: 'World News',
+                                      content: state.newsList[index].title
+                                          .toString(),
+                                      image: state.newsList[index].urlToImage
+                                          .toString(),
+                                      time: formatTime(state
+                                          .newsList[index].publishedAt
+                                          .toString()),
+                                      onPressed: () async {
+                                        await Share.share(
+                                            '${state.newsList[index].url}');
+                                      },
+                                      monthAndDates: monthAndDay(state
+                                          .newsList[index].publishedAt
+                                          .toString()),
+                                    ),
+                                    sizedWidthBox10
+                                  ],
+                                )),
+                      );
+                    } else {
                       return Center(
                           child: ListView(
                         scrollDirection: Axis.horizontal,
@@ -61,8 +91,8 @@ class NewsPage extends StatelessWidget {
                             10,
                             (index) => Shimmer.fromColors(
                                   period: const Duration(milliseconds: 3000),
-                                  baseColor: Colors.grey.shade300,
-                                  highlightColor: Colors.grey.shade100,
+                                  baseColor: kWhite,
+                                  highlightColor: Colors.grey.shade500,
                                   enabled: true,
                                   child: Row(
                                     children: [
@@ -79,63 +109,70 @@ class NewsPage extends StatelessWidget {
                                   ),
                                 )),
                       ));
-                    } else if (state.isError) {
-                      return const Center(
-                        child: Text('Error while getting data'),
-                      );
-                    } else if (state.newsList.isEmpty) {
-                      return const Center(
-                        child: Text('List is empty'),
-                      );
                     }
-                    return ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(
-                          state.newsList.length,
-                          (index) => Row(
-                                children: [
-                                  TopNewsTopWidgets(
-                                    modelList: state.newsList[index],
-                                    contry: 'World News',
-                                    content:
-                                        state.newsList[index].title.toString(),
-                                    image: state.newsList[index].urlToImage
-                                        .toString(),
-                                    time: formatTime(state
-                                        .newsList[index].publishedAt
-                                        .toString()),
-                                    onPressed: () async {
-                                      await Share.share(
-                                          '${state.newsList[index].url}');
-                                    },
-                                    monthAndDates: dateAndTime(state
-                                        .newsList[index].publishedAt
-                                        .toString()),
-                                  ),
-                                  sizedWidthBox10
-                                ],
-                              )),
-                    );
                   },
                 ),
               ),
               sizedHeigtBox15,
-              const MixedNewsUpdatesWidgets(
-                  countryName: "INDIA",
-                  image: 'assets/images/movieIcon.jpg',
-                  mmDD: "Mar 07  | # israel palestine co..",
-                  time: '2 min Ago',
-                  content:
-                      'Cabinet okays 4 percent hike in DA for Central the gove staff.'),
-              sizedHeigtBox15,
-              const MixedNewsUpdatesWidgets(
-                countryName: "Kerala",
-                image: 'assets/images/movieIcon.jpg',
-                mmDD: "May 12  | # Malappuram",
-                time: '20 min Ago',
-                content:
-                    'Mortal remains of Kerala native killed in Israel leave for India.',
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state.categoryCountryList.isNotEmpty) {
+                    return Column(
+                      children: List.generate(
+                        state.categoryCountryList.length,
+                        (index) => Column(
+                          children: [
+                            MixedNewsUpdatesWidgets(
+                              countryName: 'India',
+                              time: formatTime(state
+                                  .categoryCountryList[index].publishedAt
+                                  .toString()),
+                              mmDD: monthAndDay(state
+                                  .categoryCountryList[index].publishedAt
+                                  .toString()),
+                              content: state.categoryCountryList[index].title
+                                  .toString(),
+                              image: state.categoryCountryList[index].urlToImage
+                                  .toString(),
+                              onPressed: () {
+                                Share.share(state.categoryCountryList[index].url
+                                    .toString());
+                              },
+                              modelList: state.categoryCountryList[index],
+                            ),
+                            sizedHeigtBox10
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return SizedBox(
+                      height: 236,
+                      child: ListView(
+                        children: List.generate(
+                            10,
+                            (index) => Shimmer.fromColors(
+                                  period: const Duration(milliseconds: 3000),
+                                  baseColor: Colors.grey.shade300,
+                                  highlightColor: Colors.grey.shade100,
+                                  enabled: true,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: Get.width,
+                                        height: 236,
+                                        decoration:
+                                            const BoxDecoration(color: kBlack),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                      ),
+                    );
+                  }
+                },
               ),
+              sizedHeigtBox15,
             ]),
           ),
         ),
@@ -144,7 +181,7 @@ class NewsPage extends StatelessWidget {
   }
 }
 
-String dateAndTime(String timezone) {
+String monthAndDay(String timezone) {
   DateTime dateTime = DateTime.parse(timezone);
   String formattedDate = DateFormat("dd MMM, yyyy").format(dateTime);
   return formattedDate;

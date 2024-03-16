@@ -1,13 +1,18 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_emoji_feedback/flutter_emoji_feedback.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
+import 'package:mini/application/home/home_bloc.dart';
 import 'package:mini/core/color/color.dart';
 import 'package:mini/core/const/const.dart';
+import 'package:mini/domain/category_and_country/model/india_news_search_home.dart';
 import 'package:mini/domain/home/model/search_home.dart';
+import 'package:mini/domain/movies_and_science/model/movies_and_science.dart';
 import 'package:mini/presentations/widgets/common_page.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -225,6 +230,9 @@ class ChoiceChipsWidget extends StatelessWidget {
         selected: choiceValue == choicechipNumber,
         onSelected: (value) {
           valueListenable.value = choicechipNumber;
+          BlocProvider.of<HomeBloc>(context).add(TopNewsToday(query: title));
+          BlocProvider.of<HomeBloc>(context)
+              .add(const IndiaCategoryNews(country: 'in', category: ''));
         },
         selectedColor: kBlack,
       ),
@@ -241,86 +249,95 @@ class MixedNewsUpdatesWidgets extends StatelessWidget {
     required this.mmDD,
     required this.content,
     required this.image,
+    required this.onPressed,
+    required this.modelList,
   });
   final String countryName;
   final String time;
   final String content;
   final String mmDD;
-  final String image;
+  final String? image;
+  final void Function()? onPressed;
+  // final CategoryAndCountryList? modelList;
+  final dynamic modelList;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Get.width,
-      height: 236,
-      decoration:
-          BoxDecoration(color: kWhite, borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            children: [
-              const Text('NEWS |'),
-              sizedWidthBox5,
-              Text(countryName, style: const TextStyle(color: kGrey)),
-              const Spacer(),
-              Text(time)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 130,
-                width: 120,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
+    return InkWell(
+      onTap: () => Get.to(() => CommonPage(modelList: modelList)),
+      child: Container(
+        width: Get.width,
+        height: 236,
+        decoration: BoxDecoration(
+            color: kWhite, borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              children: [
+                const Text('NEWS |'),
+                sizedWidthBox5,
+                Text(countryName, style: const TextStyle(color: kGrey)),
+                const Spacer(),
+                Text('$time ⏰')
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 130,
+                  width: 120,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  child: image != null
+                      ? Image.network(
+                          image!,
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                 ),
-              ),
-              sizedWidthBox10,
-              Expanded(
-                child: SizedBox(
-                  width: 160,
-                  child: Text(
-                    content,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    maxLines: 15,
+                sizedWidthBox10,
+                Expanded(
+                  child: SizedBox(
+                    width: 160,
+                    child: Text(
+                      content,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Text(
-            mmDD,
-            style: const TextStyle(color: kGrey),
-          ),
-          Row(
-            children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.favorite,
-                    color: kGrey,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.share,
-                    color: kGrey,
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.download,
-                    color: kGrey,
-                  )),
-            ],
-          ),
-        ]),
+              ],
+            ),
+            Text(
+              mmDD,
+              style: const TextStyle(color: kGrey),
+            ),
+            Row(
+              children: [
+                LikeButton(
+                    circleColor:
+                        CircleColor(start: lightBlueAccent, end: kRed)),
+                IconButton(
+                    onPressed: onPressed,
+                    icon: const Icon(
+                      Icons.share,
+                      color: kGrey,
+                    )),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.download,
+                      color: kGrey,
+                    )),
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -339,6 +356,72 @@ class Dividerwidget extends StatelessWidget {
       height: 2,
       color: kBlack,
       thickness: thickness,
+    );
+  }
+}
+
+//=========================================================
+class DiscoverWidgets extends StatelessWidget {
+  const DiscoverWidgets({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.onPressed,
+    required this.modelList,
+  });
+  final String? imageUrl;
+  final String title;
+  final void Function()? onPressed;
+  final isEmptyImageUrl =
+      'https://ichef.bbci.co.uk/news/1024/branded_news/83B3/production/_115651733_breaking-large-promo-nc.png';
+  final MoviesAndScienceArticle modelList;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => Get.to(() => CommonPage(modelList: modelList)),
+      child: Container(
+          width: Get.width,
+          height: 410,
+          decoration: BoxDecoration(
+              color: kWhite, borderRadius: BorderRadius.circular(10)),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                sizedHeigtBox15,
+                Container(
+                  width: Get.width,
+                  height: 320,
+                  decoration: BoxDecoration(
+                      color: kWhite, borderRadius: BorderRadius.circular(10)),
+                  child: imageUrl != null
+                      ? Image.network(
+                          imageUrl!,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.network(isEmptyImageUrl),
+                ),
+                sizedHeigtBox5,
+                Row(
+                  children: [
+                    const Text('MOVIES & SCIENCE |'),
+                    Container(
+                      width: Get.width / 4,
+                      child: Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const Spacer(),
+                    const LikeButton(),
+                    IconButton(
+                        onPressed: onPressed, icon: const Icon(Icons.share))
+                  ],
+                )
+              ],
+            ),
+          )),
     );
   }
 }

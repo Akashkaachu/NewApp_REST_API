@@ -1,0 +1,55 @@
+ flutter pub run build_runner build --delete-conflicting-outputs
+
+1)set kBaseUrl = 'https://newsapi.org/v2';
+//
+
+
+2)set const apiKey = '8bc94f02ccbe4db7a66f22bb8c12ab1e';
+//
+
+
+3)set apiEndPoints=======>class ApiEndPoints {
+  String searchUrlFunc({required String query}) {
+    return '$kBaseUrl/everything?q=$query&apiKey=$apiKey';
+  }
+}
+//
+
+
+4)model create cheyyanam(means json file create cheyyuka)
+*copy the api list and paste it on json viewer and take only one list and convert it .
+*change the className(Rename) of created json file into model(domain enna folder nte ullil aan model create cheythath)
+*abstract class undakkanam athayath model nte ullil service class athanu abstract class.
+*declare cheytha abstract class ne vere oru classlekk implement cheyyanam (infrastructure enna folder create cheyth 
+athinte ullil file create cheyyuka)--------------@Lazysingleton(as:)kodukkanmarakkaruth
+
+
+
+ 5) Bloc create cheyyanam
+ * oru page il kure items undagil (top news india, top cars) namukk same bloc upayogikkam but differt
+ pages undagil nammukk different aaaya bloc creat cheyyanam 
+ * application enna folder create cheyth aaa folder ne  Bloc:new bloc enn vach wrap cheyyuka.
+     **)Event----->aadhyam event ullil aan cheyya....>>
+      const factory MovieAndScienceEvent.movieAndScience(
+      {required String movie, required String science}) = MovieAndScience;
+      evide enn vachaal enik API il ninn vendath movie um , science um aan appo constructoril
+      njn required aayi call cheythath aan.pinne oru page il ishatam pole kaaryan vilikanamegil
+      vere fuction ezhuthavunnath aan.
+      **)State-------->
+       factory MovieAndScienceState(
+      {required List<MoviesAndScienceArticle> movieScienceList,
+      required bool isLoading,
+      required bool isError}) = _MovieAndScienceState;
+  factory MovieAndScienceState.initial() => MovieAndScienceState(
+      movieScienceList: [], isLoading: false, isError: false);
+      ivide list koduthath aa model class aan kaaranam nammukk vendath aa api il ninn varunn 
+      aa model ile oroo items aan list .pinne ee state initial samayath data onnum undavilla 
+      athukond aaan ath empty aaki vachath 
+      **) Bloc----------------->evide nammal aa Service class ne aadhyam initailize cheyyanam
+      *)Bloc enna page il @injectable enn declare cheyyanam
+      *)create cheytha bloc ne eth page aano vilikkendath avide initialize cheyyanam
+       WidgetsBinding.instance!.addPostFrameCallback((_) {
+      BlocProvider.of<MovieAndScienceBloc>(context)
+          .add(const MovieAndScience(movie: 'movie', science: 'science'));
+    })
+    *)main paage il MultiblocBuilder ne vilich athinete ullil providers ne declare cheyyanam

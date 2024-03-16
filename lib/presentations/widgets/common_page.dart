@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:like_button/like_button.dart';
 import 'package:mini/core/color/color.dart';
 import 'package:mini/core/const/const.dart';
-import 'package:mini/domain/home/model/search_home.dart';
 import 'package:mini/presentations/widgets/news_front_page/news_front_page.dart';
 import 'package:mini/screens/splash/splash_screen.dart';
 import 'package:mini/utility/refactory_widgets/refactory_widgets.dart';
@@ -15,7 +13,7 @@ class CommonPage extends StatelessWidget {
     super.key,
     required this.modelList,
   });
-  final HomeSearchArticle modelList;
+  final dynamic modelList;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +44,7 @@ class CommonPage extends StatelessWidget {
           Row(
             children: [
               sizedWidthBox10,
-              Text(dateAndTime(modelList.publishedAt.toString())),
+              Text(monthAndDay(modelList.publishedAt.toString())),
               const Spacer(),
               const LikeButtonWidget(),
               IconButton(
